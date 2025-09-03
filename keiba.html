@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>競馬予測の新視点｜オッズ時間変動モデルで市場心理を読む｜Keiba Compass</title>
+  <link rel="stylesheet" href="./css/style.min.css" />
+  <meta name="description" content="一般的な予想（スピード指数・血統・騎手/調教師）の限界を踏まえ、オッズの時間変動から“市場心理”を読む手法を解説。成功/失敗例、群集心理への応用、実践ステップまで。">
+</head>
+<body>
+
+  <!-- Skip -->
+  <a class="c-skiplink" href="#main">本文へスキップ</a>
+
+  <!-- ===========================
+       Header（色付き＋ハンバーガー）
+  =========================== -->
+  <header class="l-header c-header-hero is-sticky" role="banner">
+    <input type="checkbox" id="nav-open" class="c-burger__cb" aria-hidden="true" />
+    <div class="c-header-hero__top">
+      <div class="l-container c-header-hero__brand">
+        <a class="c-logo c-logo--inv" href="/">
+          <span class="c-logo__mark">KC</span>
+          <span class="c-logo__text">Keiba Compass</span>
+        </a>
+        <p class="c-header-hero__tagline">オッズの動きから“今”を読むデータコラム</p>
+        <label for="nav-open" class="c-burger" aria-label="メニューを開閉">
+          <span class="c-burger__line"></span>
+        </label>
+      </div>
+    </div>
+    <nav class="c-hero-nav" aria-label="グローバルナビ">
+      <div class="l-container">
+        <ul class="c-hero-nav__list">
+          <li><a class="is-current" href="#">特集</a></li>
+          <li><a href="#">予想理論</a></li>
+          <li><a href="#">データ分析</a></li>
+          <li><a href="#">重賞レビュー</a></li>
+          <li><a href="#">初心者ガイド</a></li>
+          <li><a href="#">コミュニティ</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="c-navdrawer" aria-hidden="true">
+      <div class="l-container">
+        <ul class="c-navdrawer__list">
+          <li><a href="#">特集</a></li>
+          <li><a href="#">予想理論</a></li>
+          <li><a href="#">データ分析</a></li>
+          <li><a href="#">重賞レビュー</a></li>
+          <li><a href="#">初心者ガイド</a></li>
+          <li><a href="#">コミュニティ</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===========================
+       Main
+  =========================== -->
+  <main id="main" class="l-container" role="main">
+
+    <!-- Breadcrumb -->
+    <nav class="c-breadcrumb u-mb-16" aria-label="パンくず">
+      <ol class="c-breadcrumb__list">
+        <li><a href="/">ホーム</a></li>
+        <li><a href="#">特集</a></li>
+        <li>競馬予測の新視点</li>
+      </ol>
+    </nav>
+
+    <!-- 2カラム -->
+    <div class="c-grid c-grid--3">
+
+      <!-- ================== Article ================== -->
+      <article class="u-grid-span-2">
+
+        <!-- Hero -->
+        <header class="c-hero c-hero--boxed u-mb-24">
+          <div class="c-hero__imgwrap">
+            <img class="c-hero__img" src="https://picsum.photos/seed/keiba-hero/1200/630" alt="レース直前の馬場とオッズボード" width="1200" height="630" />
+          </div>
+          <p class="c-hero__caption c-hero__captext">撮影：編集部（イメージ）</p>
+        </header>
+
+        <!-- Title -->
+        <h1 class="c-heading c-heading--lv1 u-mb-8">競馬予測の新視点｜オッズ時間変動モデルで市場心理を読む</h1>
+        <span class="c-heading__sub u-mb-16">王道指標の限界から、“動的情報”の読み解きへ</span>
+
+        <!-- 注意/免責（控えめ表記） -->
+        <p class="c-infomini u-mb-24" role="note" aria-label="注意事項">
+          <span class="c-infomini__key">NOTE</span><span class="c-infomini__sep">：</span>
+          <span class="c-infomini__val">本記事は分析コラムです。購入は自己判断・自己責任で。未成年の馬券購入は法律で禁止されています。</span>
+        </p>
+
+        <!-- TOC -->
+        <aside class="c-toc u-mb-24" aria-label="目次">
+          <strong class="u-bold">目次</strong>
+          <ol class="c-toc__list">
+            <li><a href="#classic">一般的な競馬予測方法とその限界</a></li>
+            <li><a href="#odds-uniq">オッズ時間変動のユニークさ</a></li>
+            <li><a href="#cases">実体験で感じた“違い”</a></li>
+            <li><a href="#psych">市場心理学との接点</a></li>
+            <li><a href="#summary">まとめ：なぜ今オッズ変動を見るべきか</a></li>
+          </ol>
+        </aside>
+
+        <!-- 一般的な方法と限界 -->
+        <section id="classic" class="l-section">
+          <h2 class="c-heading c-heading--lv2 u-mb-8"><span class="c-heading__badge">基礎</span>一般的な競馬予測方法とその限界</h2>
+
+          <h3 class="c-heading c-heading--lv3-side u-mb-8">スピード指数</h3>
+          <p class="c-text u-mb-12">
+            スピード指数は過去の走破タイムを基準化した指標で、<strong>馬場・距離補正</strong>により横比較しやすいのが魅力。ただし<strong>静的な過去情報</strong>のため、
+            当日の<strong>展開/馬体重/気配</strong>などの変動を織り込みづらい課題があります。
+          </p>
+
+          <h3 class="c-heading c-heading--lv3-side u-mb-8">血統・騎手・調教師</h3>
+          <p class="c-text u-mb-12">
+            コース適性や厩舎の仕上げ傾向など有用な示唆が得られる一方、<strong>広く共有された情報</strong>でありやすく、
+            <mark>人気に織り込まれて妙味が薄れる</mark>こともしばしば。
+          </p>
+
+          <div class="c-infobox c-infobox--ribbon u-mb-16">
+            <h4 class="c-infobox__title">要点（王道指標の“効く部分”と“届かない部分”）</h4>
+            <ul class="c-list c-list--arrow u-mb-12">
+              <li><strong>効く：</strong>長期の基礎力や適性の把握</li>
+              <li><strong>弱い：</strong>直前の情報や市場の“騒ぎ”の吸収</li>
+            </ul>
+            <p class="c-text c-text--muted">だからこそ、<strong>“動き”そのもの</strong>を観察する補助線が有効。</p>
+          </div>
+
+          <div class="c-table-wrap u-mb-16">
+            <table class="c-table c-table--score">
+              <caption class="c-table__cap">静的指標 vs 動的指標（記事内定義）</caption>
+              <thead>
+                <tr>
+                  <th scope="col">観点</th>
+                  <th scope="col">静的（例：指数/血統）</th>
+                  <th scope="col">動的（例：オッズ時間変動）</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">情報鮮度</th><td>中〜低</td><td><span class="c-chip c-chip--brand">高</span></td></tr>
+                <tr><th scope="row">共有度</th><td>高（織り込みやすい）</td><td>中（瞬間的な偏り）</td></tr>
+                <tr class="is-emph"><th scope="row">差別化余地</th><td>限定的</td><td><strong>高い</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- オッズ時間変動のユニークさ -->
+        <section id="odds-uniq" class="l-section">
+          <h2 class="c-heading c-heading--lv2-double u-mb-8">オッズ時間変動のユニークさ</h2>
+          <p class="c-text u-mb-12">
+            オッズは単なる数字ではなく、<strong>市場（買い手）の心理</strong>が反映された動的データ。<u>発走直前まで変化</u>し続けるため、
+            「今この瞬間」の示唆を拾えるのが最大の強みです。
+          </p>
+
+          <figure class="c-sidecar u-mb-16">
+            <div>
+              <img class="c-figure__img" src="https://picsum.photos/seed/board/800/500" alt="直前に変動するオッズ板イメージ" width="800" height="500">
+              <figcaption class="c-figcaption">“騒ぎ”を捉える：短時間の不自然な傾きに注目</figcaption>
+            </div>
+            <div>
+              <h4 class="c-sidecar__title">実践ステップ（最小セット）</h4>
+              <ol class="c-steps">
+                <li>前日〜当日の基準オッズを控える</li>
+                <li>発走30→10→5→3分の<strong>傾き</strong>を記録</li>
+                <li>全体人気の動きと<strong>相対</strong>で評価する</li>
+              </ol>
+            </div>
+          </figure>
+
+          <section class="c-cta-inline c-cta-inline--accent u-mb-24">
+            <p class="c-cta-inline__title">ポイント：動きは「単独」ではなく「相対」で見る</p>
+            <p class="c-cta-inline__note">一頭だけが買われる/売られる現象は背景が乗りやすい。</p>
+            <a class="c-cta-inline__action" href="#">メモ用テンプレをダウンロード</a>
+          </section>
+        </section>
+
+        <!-- 実体験：成功/失敗 -->
+        <section id="cases" class="l-section">
+          <h2 class="c-heading c-heading--lv2-tab u-mb-8">実体験で感じた“違い”</h2>
+
+          <!-- Success -->
+          <div class="c-bubble c-bubble--balloon u-mb-12">
+            <img class="c-bubble__avatar" src="https://picsum.photos/seed/editor1/72/72" alt="" width="36" height="36">
+            <div class="c-bubble__box">
+              <span class="c-bubble__eyebrow">成功例</span>
+              <p class="c-bubble__text">前日人気薄→<strong>発走20分前から一方的に買われた</strong>馬を単複で拾って的中。「オッズって喋る」と実感。</p>
+            </div>
+          </div>
+
+          <!-- Failure -->
+          <div class="c-bubble c-bubble--balloon is-right u-mb-16">
+            <img class="c-bubble__avatar" src="https://picsum.photos/seed/editor2/72/72" alt="" width="36" height="36">
+            <div class="c-bubble__box">
+              <span class="c-bubble__eyebrow">失敗例</span>
+              <p class="c-bubble__text">直前急落＝<strong>単勝一点の大口</strong>だけで根拠薄。結果は凡走。<mark>“本物”と“ノイズ”の見極め</mark>が最重要。</p>
+            </div>
+          </div>
+
+          <div class="c-infobox c-infobox--line u-mb-24">
+            <h4 class="c-infobox__title">見極めの目安</h4>
+            <dl class="c-kvrows">
+              <div class="c-kvrows__row"><dt>相関</dt><dd>単勝だけでなく複勝/ワイド側にも資金が連動しているか</dd></div>
+              <div class="c-kvrows__row"><dt>持続</dt><dd>短期的スパイクではなく、<strong>段階的な傾き</strong>が続いているか</dd></div>
+              <div class="c-kvrows__row"><dt>相対</dt><dd>同レース内の他人気馬の動きと比べた<strong>相対的な異常</strong>か</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <!-- 市場心理学との接点 -->
+        <section id="psych" class="l-section">
+          <h2 class="c-heading c-heading--lv2-box u-mb-8">市場心理学との接点</h2>
+          <p class="c-text u-mb-12">ハーディング（群集行動）と平均回帰は、競馬の直前オッズにも応用可能。</p>
+
+          <div class="c-procon u-mb-16">
+            <div class="c-procon__col">
+              <h3 class="c-procon__head">逆張りが効く場面</h3>
+              <ul class="c-procon__list">
+                <li>オッズ急落で<strong>過熱</strong>した人気馬の反動</li>
+                <li>相対的に<strong>売られた</strong>実力馬に妙味</li>
+              </ul>
+            </div>
+            <div class="c-procon__col">
+              <h3 class="c-procon__head c-procon__head--cons">リスク/注意</h3>
+              <ul class="c-procon__list">
+                <li>イベントドリブン（出走直前情報）の<strong>本物急落</strong>を逆張りで踏み抜く</li>
+                <li>資金管理不足で<strong>分散が効かない</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="c-table-wrap u-mb-24">
+            <table class="c-table c-table--score">
+              <caption class="c-table__cap">心理仮説の活かし方（編集部メモ）</caption>
+              <thead>
+                <tr>
+                  <th scope="col">仮説</th>
+                  <th scope="col">示唆</th>
+                  <th scope="col">運用</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">ハーディング</th><td>群集は同方向に偏る</td><td>偏り後の<strong>反動</strong>を狙う</td></tr>
+                <tr class="is-emph"><th scope="row">平均回帰</th><td>行き過ぎは戻る</td><td>異常に売られた側の<strong>妙味</strong></td></tr>
+                <tr><th scope="row">確証バイアス</th><td>都合の良い情報だけ拾う</td><td>ルール化して<strong>機械的</strong>に検証</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- まとめ -->
+        <section id="summary" class="l-section">
+          <h2 class="c-heading c-heading--lv2 u-mb-8"><span class="c-heading__badge">結論</span>なぜ今オッズ変動を見るべきか</h2>
+          <ul class="c-list c-list--disc u-mb-12">
+            <li><strong>瞬間の市場心理</strong>が見える（王道指標にない鮮度）</li>
+            <li>経験で<strong>“本物/ノイズ”</strong>の見分けが鍛えられる</li>
+            <li>投資理論・行動経済の<strong>応用余地</strong>が広い</li>
+          </ul>
+
+          <!-- Inline CTA（コミュニティ誘導・控えめ） -->
+          <section class="c-cta-inline u-mb-16">
+            <p class="c-cta-inline__title">「オッズの動き、おもしろい！」と思ったら</p>
+            <p class="c-cta-inline__note">実践ログや気づきを共有し合うコミュニティを運営中です。</p>
+            <a class="c-cta-inline__action" href="#">参加ガイドを見る</a>
+          </section>
+
+          <!-- Full-bleed CTA（読者参加の呼びかけ） -->
+          <section class="c-cta-bleed c-cta-bleed--stripe u-bleed u-mb-24">
+            <div class="c-cta-bleed__inner">
+              <div class="c-cta-bleed__main">
+                <p class="c-cta-bleed__title">コメントやフォローで、次回記事にあなたの考察を掲載！</p>
+                <p class="c-cta-bleed__note">#オッズ時間変動 のタグで投稿いただければ編集部がピックアップします。</p>
+              </div>
+              <div class="c-cta-bleed__side">
+                <a class="c-btn c-btn--line" href="#">投稿ルールを確認する</a>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <!-- FAQ（軽く2件） -->
+        <section class="l-section">
+          <h2 class="c-heading c-heading--lv2 u-mb-8"><span class="c-heading__badge">FAQ</span>よくある質問</h2>
+          <dl class="c-faq">
+            <div class="c-faq__item">
+              <dt class="c-faq__q">直前のオッズだけ見れば勝てますか？</dt>
+              <dd class="c-faq__a">万能ではありません。<strong>基礎力（静的）× 直前の動き（動的）</strong>の掛け算で再現性を高めるのが前提です。</dd>
+            </div>
+            <div class="c-faq__item">
+              <dt class="c-faq__q">資金管理はどうする？</dt>
+              <dd class="c-faq__a">固定金額/固定比率などルールを事前に決めて機械的に運用。<strong>追い上げは禁止</strong>を徹底しましょう。</dd>
+            </div>
+          </dl>
+        </section>
+
+        <!-- Author -->
+        <section class="l-section">
+          <div class="c-authorbox--line">
+            <img class="c-authorbox__avatar" src="https://picsum.photos/seed/author-odds/120/120" alt="筆者アイコン" width="56" height="56">
+            <div class="c-authorbox__body">
+              <p class="c-authorbox__name">中村 直樹 <span class="c-authorbox__role">編集/データ担当</span></p>
+              <p class="c-authorbox__bio">指数とオッズ、両輪で検証するのがモットー。群集心理×平均回帰の視点を発信しています。</p>
+            </div>
+          </div>
+          <p class="c-authorbyline">公開：2025/09/03　更新：2025/09/03</p>
+        </section>
+
+        <!-- Pager -->
+        <nav class="c-pager u-mb-24" aria-label="ページャ">
+          <a class="c-pager__item c-pager__prev" href="#">‹ 前の記事</a>
+          <a class="c-pager__item is-current" href="#">1</a>
+          <a class="c-pager__item" href="#">2</a>
+          <a class="c-pager__item" href="#">3</a>
+          <a class="c-pager__item c-pager__next" href="#">次の記事 ›</a>
+        </nav>
+
+      </article>
+
+      <!-- ================== Sidebar ================== -->
+      <aside aria-label="サイドバー">
+
+        <!-- サイド検索 -->
+        <form class="c-search u-mb-16" action="/search" method="get" role="search">
+          <label class="visually-hidden" for="s-side">サイト内検索</label>
+          <input id="s-side" class="c-search__input" type="search" name="q" placeholder="キーワード検索" />
+          <button class="c-search__btn c-btn c-btn--line c-btn--sm" type="submit">検索</button>
+        </form>
+
+        <!-- 人気記事（Media List） -->
+        <section class="l-section">
+          <h2 class="c-heading c-heading--lv4-dashed u-mb-8">人気記事</h2>
+          <ul class="c-articlelist c-articlelist--media">
+            <li>
+              <a class="c-articlelist__link" href="#">
+                <img class="c-articlelist__thumb" src="https://picsum.photos/seed/hot1/144/144" alt="重賞オッズ回顧" width="72" height="72">
+                <div class="c-articlelist__body">
+                  <p class="c-articlelist__title">直前オッズで読み解く春G1回顧</p>
+                  <div class="c-articlelist__meta">
+                    <span>特集</span><time datetime="2025-04-20">2025/04/20</time>
+                  </div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a class="c-articlelist__link" href="#">
+                <img class="c-articlelist__thumb" src="https://picsum.photos/seed/hot2/144/144" alt="複勝の資金管理" width="72" height="72">
+                <div class="c-articlelist__body">
+                  <p class="c-articlelist__title">複勝メイン派の資金管理ルール</p>
+                  <div class="c-articlelist__meta">
+                    <span>基礎</span><time datetime="2025-06-11">2025/06/11</time>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- カテゴリ（Minimal） -->
+        <section class="l-section">
+          <h2 class="c-heading c-heading--lv4 u-mb-8">カテゴリ</h2>
+          <ul class="c-articlelist c-articlelist--minimal">
+            <li><a href="#">予想理論</a><time datetime="2025-08-25">08/25</time></li>
+            <li><a href="#">データ分析</a><time datetime="2025-08-16">08/16</time></li>
+            <li><a href="#">重賞レビュー</a><time datetime="2025-07-29">07/29</time></li>
+            <li><a href="#">初心者ガイド</a><time datetime="2025-06-03">06/03</time></li>
+          </ul>
+        </section>
+
+        <!-- サイドCTA（控えめ） -->
+        <section class="c-cta-inline u-mb-16">
+          <p class="c-cta-inline__title">無料ニュースレターで新着分析を受け取る</p>
+          <p class="c-cta-inline__note">週1配信／解除は1クリック。</p>
+          <a class="c-cta-inline__action" href="#">登録ページへ</a>
+        </section>
+
+        <!-- この記事の評価軸（シート） -->
+        <section class="c-infobox c-infobox--sheet u-mb-16">
+          <h3 class="c-infobox__title">この記事の前提</h3>
+          <div class="c-kvgrid">
+            <dl class="c-kv c-kv--grid">
+              <div class="c-kv__pair"><dt>目的</dt><dd>理論と実践ログの共有</dd></div>
+              <div class="c-kv__pair"><dt>対象</dt><dd>指数＋直前データを併用したい人</dd></div>
+              <div class="c-kv__pair"><dt>注意</dt><dd>過信NG／資金管理を最優先</dd></div>
+              <div class="c-kv__pair"><dt>法律</dt><dd>未成年購入禁止・地域ルール順守</dd></div>
+            </dl>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <!-- ===========================
+       Footer
+  =========================== -->
+  <footer class="l-footer c-footer" role="contentinfo">
+    <div class="c-footer__top l-container">
+      <section class="c-footer__about">
+        <a class="c-logo c-logo--footer" href="/">
+          <span class="c-logo__mark">KC</span>
+          <span class="c-logo__text">Keiba Compass</span>
+        </a>
+        <p class="c-footer__desc">
+          “今”の動きに強くなる。オッズから市場心理を読み解く分析メディア。
+        </p>
+      </section>
+
+      <nav class="c-footer__nav" aria-label="フッターナビ">
+        <div class="c-footer__col">
+          <h3 class="c-footer__head">人気カテゴリ</h3>
+          <ul class="c-footer__list">
+            <li><a href="#">予想理論</a></li>
+            <li><a href="#">データ分析</a></li>
+            <li><a href="#">重賞レビュー</a></li>
+            <li><a href="#">初心者ガイド</a></li>
+          </ul>
+        </div>
+        <div class="c-footer__col">
+          <h3 class="c-footer__head">ガイド</h3>
+          <ul class="c-footer__list">
+            <li><a href="#">資金管理の基本</a></li>
+            <li><a href="#">用語集</a></li>
+            <li><a href="#">よくある質問</a></li>
+            <li><a href="#">編集ポリシー</a></li>
+          </ul>
+        </div>
+        <div class="c-footer__col">
+          <h3 class="c-footer__head">運営情報</h3>
+          <ul class="c-footer__list">
+            <li><a href="#">運営について</a></li>
+            <li><a href="#">お問い合わせ</a></li>
+            <li><a href="#">プライバシーポリシー</a></li>
+            <li><a href="#">広告掲載について</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="c-footer__legal">
+      <div class="l-container c-footer__legal-inner">
+        <p class="c-footer__copy">© 2025 Keiba Compass</p>
+        <ul class="c-footer__legal-links">
+          <li><a href="#">特定商取引法に基づく表記</a></li>
+          <li><a href="#">利用規約</a></li>
+          <li><a href="#">サイトマップ</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
