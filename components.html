@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI Components</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- シンプルな見出し（タグ依存サイズ） -->
+  <h1 class="c-heading">アフィリエイトで成果を最大化する設計</h1>
+
+  <!-- アクセントバー + サブ -->
+  <h2 class="c-heading c-heading--accent-bar">
+    高CVカテゴリを最短で攻める戦略
+    <span class="c-heading__sub">競合度とCVRのバランスをとるテーマ選定</span>
+  </h2>
+
+  <!-- アンダーライン + 中央寄せ（ユーティリティでもOK） -->
+  <h2 class="c-heading c-heading--underline c-heading--center">
+    格安SIMの完全ガイド
+  </h2>
+
+  <!-- グラデーション文字 + アイブロー（眉） -->
+  <h3 class="c-heading c-heading--gradient">
+    <span class="c-heading__eyebrow">Beginner</span>
+    初心者でも失敗しない案件の選び方
+  </h3>
+
+  <!-- アイコン付き（SVG/画像どちらでも） -->
+  <h3 class="c-heading c-heading--with-icon">
+    <svg class="c-heading__icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2L2 7l10 5 10-5-10-5Zm0 20-10-5V9l10 5 10-5v8l-10 5Z" />
+    </svg>
+    レビューの信頼性を高める3つの工夫
+  </h3>
+
+  <!-- アンカーリンク（# をホバーで表示） -->
+  <h2 class="c-heading" id="howto">
+    <a class="c-heading__anchor" href="#howto">サイト構造の作り方</a>
+  </h2>
+
+  <!-- ナンバリング（data-number 明示 or 自動カウンタ） -->
+  <h2 class="c-heading c-heading--numbered" data-number="01">
+    優先度の高いUIから実装する
+  </h2>
+  <h2 class="c-heading c-heading--numbered">
+    スキーマと内部リンクを型化する
+  </h2>
+
+</body>
+</html>
