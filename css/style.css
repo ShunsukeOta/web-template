@@ -1055,7 +1055,7 @@ ins {
 
 @media (max-width: 768px) {
   .c-grid--2, .c-grid--3 {
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
   }
 }
 @media (min-width: 769px) {
@@ -2858,7 +2858,7 @@ ins {
 .c-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 560px;
+  min-width: 280px;
   font-size: 14px;
   line-height: 22px;
   color: var(--color-fg);
