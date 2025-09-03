@@ -3267,6 +3267,7 @@ ins {
 .c-footer__legal {
   border-top: 1px solid var(--color-border);
   background: #fff;
+  padding: 0 24px;
 }
 
 .c-footer__legal-inner {
@@ -3289,7 +3290,7 @@ ins {
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 12px;
+  gap: 4px 12px;
   flex-wrap: wrap;
 }
 
@@ -3297,6 +3298,7 @@ ins {
   color: var(--color-muted);
   text-decoration: none;
   border-bottom: 1px solid #e9eef5;
+  font-size: 14px;
 }
 
 .c-footer__legal-links a:hover {
