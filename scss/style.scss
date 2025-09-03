@@ -84,7 +84,7 @@ $bp-lg: 1024px;
 @mixin focus-ring($c: rgba(10,153,242,.35)) { outline: 2px solid $c; outline-offset: 2px; }
 
 /* ---------------- Layout ------------------------ */
-.l-container { max-width: 960px; margin: 0 auto; padding: 24px; }
+.l-container { max-width: 1100px; margin: 0 auto; padding: 24px; }
 .l-section  { padding: 24px 0; border-top: 1px solid var(--color-border); }
 .l-section:first-of-type { border-top: none; }
 
@@ -340,7 +340,7 @@ ins { text-decoration: none; background: rgba(19,205,190,0.18); }
 /* Arrow / Square / Lined / Num-circle / Steps */
 .c-list--arrow li { position: relative; padding-left: 20px; font-size: 16px; line-height: 24px; }
 .c-list--arrow li + li { margin-top: 8px; }
-.c-list--arrow li::before { content: "→"; position: absolute; left: 0; top: 0; color: var(--color-brand); font-weight: 700; }
+.c-list--arrow li::before { content: ""; position: absolute; left: 0; top: 0; color: var(--color-brand); font-weight: 700; }
 
 .c-list--square li { position: relative; padding-left: 18px; font-size: 16px; line-height: 24px; }
 .c-list--square li + li { margin-top: 8px; }
@@ -451,7 +451,7 @@ ins { text-decoration: none; background: rgba(19,205,190,0.18); }
 .c-articlecard__excerpt { font-size: 14px; line-height: 22px; color: var(--color-muted); margin-bottom: 6px; }
 .c-articlecard__meta { display: flex; gap: 10px; align-items: center; font-size: 12px; line-height: 18px; color: var(--color-muted); }
 .c-articlecard__cat { display: inline-block; padding: 2px 8px; border: 1px solid var(--color-border); border-radius: 999px; font-size: 12px; line-height: 18px; }
-.c-articlecard__thumb { display: block; border: 1px solid var(--color-border); border-radius: 6px; object-fit: cover; transition: transform .28s var(--hover-ease); transform: translateZ(0); }
+.c-articlecard__thumb { display: block; border-radius: 6px; object-fit: cover; transition: transform .28s var(--hover-ease); transform: translateZ(0); }
 
 .c-articlecard:hover { transform: translateY(-2px); background: #fff; border-color: #d9dde3; }
 .c-articlecard:hover::after { right: 0; }
@@ -528,7 +528,7 @@ ins { text-decoration: none; background: rgba(19,205,190,0.18); }
 }
 .c-articlelist--minimal time { color: var(--color-muted); font-size: 12px; line-height: 18px; white-space: nowrap; }
 .c-articlelist--minimal li:hover { background: var(--hover-bg); }
-.c-articlelist--minimal li a::after { content: "→"; display: inline-block; margin-left: 8px; transform: translateX(0); transition: transform .2s var(--hover-ease); }
+.c-articlelist--minimal li a::after { content: ""; display: inline-block; margin-left: 8px; transform: translateX(0); transition: transform .2s var(--hover-ease); }
 .c-articlelist--minimal li:hover a::after { transform: translateX(4px); }
 .c-articlelist--minimal li:hover a { color: var(--color-brand); }
 .c-articlelist a { text-decoration: none !important; }
@@ -863,7 +863,7 @@ ins { text-decoration: none; background: rgba(19,205,190,0.18); }
 /* =================================================
    Tables（記事用）
 ================================================== */
-.c-table-wrap { position: relative; overflow-x: auto; border: 1px solid var(--color-border); border-radius: 8px; background: #fff; padding: 8px; }
+.c-table-wrap { position: relative; overflow-x: auto; border-radius: 8px; background: #fff; }
 .c-table-wrap::before,
 .c-table-wrap::after { content: ""; position: absolute; top: 0; bottom: 0; width: 18px; pointer-events: none; display: none; }
 @include mq-max($bp-md) {
@@ -1012,7 +1012,7 @@ ins { text-decoration: none; background: rgba(19,205,190,0.18); }
 
 /* 上段 */
 .c-footer__top{
-  display:grid; grid-template-columns: 1fr 2fr; gap:16px; padding:20px 0;
+  display:grid; grid-template-columns: 1fr 2fr; gap:16px; padding:20px 24px;
 }
 .c-footer__about .c-logo--footer .c-logo__mark{ background:#fff; }
 .c-footer__desc{ font-size:14px; line-height:22px; color:var(--color-muted); margin-top:6px; }
@@ -1076,8 +1076,8 @@ ins { text-decoration: none; background: rgba(19,205,190,0.18); }
   color: var(--header-fg);
 }
 .c-header-hero__brand{
-  display:flex; align-items:center; gap:12px;
-  padding: 12px 0;
+  display:flex; align-items:center; gap:12px; justify-content: space-between;
+  padding: 12px 12px;
 }
 .c-logo--inv{ color:#fff; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
 .c-logo--inv .c-logo__mark{

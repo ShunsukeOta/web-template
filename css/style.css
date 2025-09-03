@@ -70,7 +70,7 @@ img {
 /* 必要最小限のmixinのみ使用 */
 /* ---------------- Layout ------------------------ */
 .l-container {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 24px;
 }
@@ -716,7 +716,7 @@ ins {
 }
 
 .c-list--arrow li::before {
-  content: "→";
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -1139,7 +1139,6 @@ ins {
 
 .c-articlecard__thumb {
   display: block;
-  border: 1px solid var(--color-border);
   border-radius: 6px;
   -o-object-fit: cover;
      object-fit: cover;
@@ -1403,7 +1402,7 @@ ins {
 }
 
 .c-articlelist--minimal li a::after {
-  content: "→";
+  content: "";
   display: inline-block;
   margin-left: 8px;
   transform: translateX(0);
@@ -2825,10 +2824,8 @@ ins {
 .c-table-wrap {
   position: relative;
   overflow-x: auto;
-  border: 1px solid var(--color-border);
   border-radius: 8px;
   background: #fff;
-  padding: 8px;
 }
 
 .c-table-wrap::before,
@@ -3217,7 +3214,7 @@ ins {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 16px;
-  padding: 20px 0;
+  padding: 20px 24px;
 }
 
 .c-footer__about .c-logo--footer .c-logo__mark {
@@ -3360,7 +3357,8 @@ ins {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 0;
+  justify-content: space-between;
+  padding: 12px 12px;
 }
 
 .c-logo--inv {
